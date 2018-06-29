@@ -17,7 +17,7 @@ def min3(xs):
     return min_ind + 1, min_val
 
 
-@functools.lru_cache(maxsize=None)
+# @functools.lru_cache(maxsize=None)
 def multop(xs):
     """(int) -> int
     Given an array p[] which represents the chain of matrices such that the
@@ -30,18 +30,34 @@ def multop(xs):
 
     if len(xs) == 3: return m3(xs)
 
+    n = len(xs)
+    tbl = [[0 for i in range(n)] for i in range(n)]
+
+    for l in range(2, n):
+        for i in range(1, n - l + 1):
+            j = i + l - 1
+            tbl[i][j] = float('inf')
+
+            for k in range(i, j):
+                q = tbl[i][k] + tbl[k + 1][j] + xs[i - 1] * xs[k] * xs[j]
+
+                if q < tbl[i][j]:
+                    tbl[i][j] = q
+
+    return tbl[1][n - 1]
+
     # i, min_val = min3(xs)
     # assert i > 0
     # res = multop(xs[0:i] + xs[i + 1::]) + min_val
     # return res
 
-    res = [
-        multop(xs[0:i] + xs[i + 1::]) + m3(xs[i - 1:i + 2])
-        for i in range(1,
-                       len(xs) - 1)
-    ]
-
-    return min(res)
+    # res = [
+    #     multop(xs[0:i] + xs[i + 1::]) + m3(xs[i - 1:i + 2])
+    #     for i in range(1,
+    #                    len(xs) - 1)
+    # ]
+    #
+    # return min(res)
 
 
 def run():
@@ -59,12 +75,13 @@ def test_min3():
     assert 2, 20 == min3((10, 5, 1, 4, 5))
 
 
-def test_multop():
+def xtest_multop():
     assert 0 == multop((10, 5))
     assert 4500 == multop((10, 30, 5, 60))
     assert 26000 == multop((40, 20, 30, 10, 30))
     assert 6000 == multop((10, 20, 30))
     assert 30000 == multop((10, 20, 30, 40, 30))
-    print('lru_cache: ', multop.cache_info())
-    # assert 2278 == multop(tuple(range(1, 20)))
+    # print('lru_cache: ', multop.cache_info())
+    assert 2278 == multop(tuple(range(1, 20)))
+    assert 323398 == multop(tuple(range(1, 100)))
     # print('lru_cache: ', multop.cache_info())
