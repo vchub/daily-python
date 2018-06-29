@@ -15,7 +15,7 @@ def counting_sort(xs):
     # O(n)
     c = [0] * (max(xs) + 1)
 
-    # O(n)
+# O(n)
 
     for x in xs:
         c[x] += 1
