@@ -1,7 +1,7 @@
 import problems.max_tip as p
 
 
-def xtest_collect_max():
+def test_collect_max():
     a = ()
     b = ()
     x, y = 1, 1
