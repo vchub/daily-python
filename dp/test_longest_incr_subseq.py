@@ -19,7 +19,6 @@ def longIncSubseq(xs) -> int:
     lens = [1] * N
     for j in range(N):
         lens[j] += predecessor(xs, lens, j)
-        # print(lens)
     return max(lens)
 
 
@@ -28,3 +27,4 @@ def test_longIncSubseq():
     assert longIncSubseq([1, 1, 2]) == 2
     assert longIncSubseq([1, 1, 2, 0, 3, 1]) == 3
     assert longIncSubseq([1, 2, 0, 3]) == 3
+    assert longIncSubseq([1, 2, -1, 3, 0, 0, 1, 2, 0]) == 4
