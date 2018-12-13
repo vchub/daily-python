@@ -23,6 +23,6 @@ def printTree():
         # print(dirs)
 
 
-def test0():
+def xtest0():
     printTree()
     assert 2 == 2
