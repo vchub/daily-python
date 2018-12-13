@@ -8,7 +8,8 @@ import timeit
 def lcs(a, b):
     """ str, str -> num """
 
-    if len(a) == 0 or len(b) == 0: return 0
+    if len(a) == 0 or len(b) == 0:
+        return 0
     dab = 0
 
     if a[0] == b[0]:
@@ -23,7 +24,8 @@ def lcs(a, b):
 def lcs_tab(a, b):
     """ str, str -> num """
 
-    if len(a) == 0 or len(b) == 0: return 0
+    if len(a) == 0 or len(b) == 0:
+        return 0
 
     m, n = len(a) + 1, len(b) + 1
     tbl = [[None] * n for x in range(m)]
