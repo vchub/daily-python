@@ -34,6 +34,7 @@ def test_mED():
     assert mED('xy', 'x') is 1
     assert mED('food', 'money') is 4
     assert mED('sunday', 'saturday') == 3
+    assert mED('algorithm', 'altruistic') == 6
 
     x, y = "skfkfsundayabc", "saturdayefg"
     tTb = timeit.timeit(lambda: edit_dist_dp(x, y), number=1)
