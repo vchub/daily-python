@@ -10,6 +10,6 @@ def dir_inode():
         print(f"{f} : {inode}")
 
 
-def test_th0():
+def xtest_th0():
     # dir_inode()
     assert 0 == 0
