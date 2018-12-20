@@ -2,6 +2,8 @@
 
 from typing import Dict, List
 
+import pytest
+
 E = int
 G = Dict[E, List[E]]
 
@@ -11,8 +13,9 @@ S = -1
 
 def toposort(g: G) -> List[E]:
     status = {k: 'new' for k in g.keys()}
+
     # attach new source for all vertices
-    g[S] = list(g.keys())
+    # g[S] = list(g.keys())
 
     def dfs(u: E, fn) -> None:
         status[u] = 'active'
@@ -30,9 +33,13 @@ def toposort(g: G) -> List[E]:
     def tostack(u):
         st.append(u)
 
-    dfs(S, tostack)
+    for u in g.keys():
+        if status[u] == 'new':
+            dfs(u, tostack)
+
+    # dfs(S, tostack)
     # remove S
-    st.pop()
+    # st.pop()
     return list(reversed(st))
 
 
@@ -47,3 +54,6 @@ def test():
         0: [],
         1: []
     })
+    with pytest.raises(RuntimeError) as err:
+        toposort({1: [2, 3], 2: [1], 3: [], 4: []})
+    assert 'NOT DAG' in str(err.value)
