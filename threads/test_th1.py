@@ -126,7 +126,7 @@ def multiThrGetter(url: str, N: int):
     return end - start
 
 
-def test_multiThrGetter():
+def xtest_multiThrGetter():
     url = 'https://google.com'
     t1 = multiThrGetter(url, 1)
     print(f"one Thread time: {t1}")
