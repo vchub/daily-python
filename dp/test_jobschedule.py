@@ -12,34 +12,26 @@ Job = namedtuple('Job', ['end', 'w'])
 Jobs = Dict[E, Job]
 
 
-def job_seq(jobs: Jobs) -> Tuple[E]:
+def job_seq(js: Jobs) -> Tuple[E]:
     """brute force with caching"""
-    js = jobs.copy()
-    js[0] = Job(0, 1)
 
     def cost(xs: Tuple[E]) -> int:
         return sum(js[x].w for x in xs)
 
-    def children(e: E) -> Iterator[E]:
-        # print('children, e: ', e)
-        # res = list(k for k, v in js.items() if v.end > js[e].end)
-        # print('res: ', res)
-        # return res
-        return (k for k, v in js.items() if v.end > js[e].end)
-
-    def p(x):
-        print('x: ', x)
-        return x
+    def remove(js: Tuple[E], e: E) -> Tuple[E]:
+        xs = list(js)
+        xs.remove(e)
+        return tuple(xs)
 
     @lru_cache(None)
-    def loop(e: E) -> Tuple[E]:
-        try:
-            # return max((p((e, ) + loop(c)) for c in children(e)), key=cost)
-            return max(((e, ) + loop(c) for c in children(e)), key=cost)
-        except ValueError as err:
-            return (e, )
+    def loop(rest: Tuple[E], tick: int) -> Tuple[E]:
+        res = list((e, ) + loop(remove(rest, e), tick + 1) for e in rest
+                   if js[e].end >= tick)
+        if not res:
+            return ()
+        return max(res, key=cost)
 
-    return p(loop(0)[1:])
+    return loop(tuple(js.keys()), 1)
 
 
 def test():
@@ -58,10 +50,11 @@ def test():
         4: Job(1, 30)
     }) == (3, 1)
 
-    assert job_seq({
+    got = job_seq({
         1: Job(2, 100),
         2: Job(1, 19),
         3: Job(2, 27),
         4: Job(1, 25),
         5: Job(3, 15)
-    }) == (3, 1, 5)
+    })
+    assert sorted(got) == sorted((3, 1, 5))
