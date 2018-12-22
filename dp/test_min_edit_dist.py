@@ -26,7 +26,7 @@ def mED(x, y: str) -> int:
         )
 
 
-def test_mED():
+def xtest_mED():
     assert mED('', '') is 0
     assert mED('x', '') is 1
     assert mED('', 'x') is 1
