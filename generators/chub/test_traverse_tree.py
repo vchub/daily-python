@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, List
+from typing import Any, Generator, Iterator, List
 
 import pytest
 
@@ -23,10 +23,13 @@ def add(x: Node, v: E) -> Node:
     return x
 
 
-def recur_inorder(x: Node) -> List[E]:
-    if not x:
-        return []
-    return recur_inorder(x.l) + [x.v] + recur_inorder(x.r)
+def inorder(node: Node) -> Iterator[E]:
+    if node:
+        for x in inorder(node.l):
+            yield x
+        yield node.v
+        for x in inorder(node.r):
+            yield x
 
 
 def test():
@@ -34,8 +37,10 @@ def test():
     N = 3
     for i in range(N):
         root = add(root, i)
-    assert recur_inorder(root) == list(range(N))
+    assert list(inorder(root)) == list(range(N))
 
+
+def xtest_busting_recursion():
     def busting(N):
         root = Node(0)
         for i in range(N):

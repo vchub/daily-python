@@ -1,3 +1,6 @@
+generators/generators
+generators/coroutines
+*.pdf
 *.py[cod]
 
 # C extensions
