@@ -59,4 +59,4 @@ def test0():
     run_th(acc)
     got = list(acc[0])
     assert len(got) == 5
-    print(got)
+    # print(got)

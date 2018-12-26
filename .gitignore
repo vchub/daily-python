@@ -1,5 +1,6 @@
 generators/generators
 generators/coroutines
+trampoline
 *.pdf
 *.py[cod]
 
