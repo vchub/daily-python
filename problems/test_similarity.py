@@ -12,6 +12,7 @@
 # return [('a', 'e')].
 
 import heapq
+import pdb
 from collections import defaultdict
 from itertools import combinations, groupby
 from operator import itemgetter
@@ -36,9 +37,8 @@ def similar(sites: Sequence[Tuple[str, int]],
         (cmp(x, y), (x, y)) for x, y in combinations(tbl.keys(), 2))
 
     heapq.heapify(cmp_tbl)
+    # pdb.set_trace()
     res = list(heapq.heappop(cmp_tbl)[1] for i in range(k))
-    # print(tbl)
-    # print(cmp_tbl)
     return res
 
 
