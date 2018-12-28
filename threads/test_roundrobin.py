@@ -35,10 +35,10 @@ def pr(xs: List[int], res: List[int], pred: Callable[[int], bool], xs_lock):
         if pred(x):
             res.append(x)
         xs_lock.release()
-        time.sleep(0.0001)
+        time.sleep(0.0005)
 
 
-def test():
+def xtest():
     assert run([1, 2, 3]) == [1, 2, 3]
     assert run([1, 2, 3]) is not [1, 2, 3]
 

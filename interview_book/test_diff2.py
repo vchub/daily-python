@@ -24,6 +24,15 @@ def diff2(xs: List[int]) -> List[Tuple[int, int]]:
     return res
 
 
+def diff2_set(ys: List[int]) -> List[Tuple[int, int]]:
+    xs = set(ys)
+    res = list((x, x + 2) for x in xs if x + 2 in xs)
+    return res
+
+
 def test():
     assert diff2([1, 2, 3]) == [(1, 3)]
     assert diff2([1, 7, 5, 9, 2, 12, 3]) == [(1, 3), (3, 5), (5, 7), (7, 9)]
+    assert diff2_set([1, 2, 3]) == [(1, 3)]
+    assert diff2_set([1, 7, 5, 9, 2, 12, 3]) == [(1, 3), (3, 5), (5, 7), (7,
+                                                                          9)]
