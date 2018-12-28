@@ -35,3 +35,16 @@ def kapr_n(x: int) -> int:
 def test():
     assert kapr_n(6174) == 0
     assert kapr_n(1234) == 3
+
+
+# Excerpt From: David Beazley and Brian K. Jones. “Python Cookbook.” Apple
+# Books.
+
+
+def xtest_infinite_loop_as_iter():
+    # import sys
+    f = open('/etc/passwd')
+    for chunk in iter(lambda: f.read(10), ''):
+        # n = sys.stdout.write(chunk)
+        # print(f'chunk {chunk}')
+        pass
