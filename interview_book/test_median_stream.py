@@ -13,7 +13,7 @@
 import dataclasses as dt
 import fileinput
 import heapq
-from typing import List
+from typing import List, Tuple
 
 E = int
 
@@ -38,36 +38,52 @@ class LR:
         if len(self.l) > len(self.r) + 1:
             heapq.heappush(self.r, -1 * heapq.heappop(self.l))
 
+    def median(self) -> Tuple[E, E]:
+        m = -self.l[0]
+        if len(self.l) > len(self.r):
+            return m, m
+        else:
+            return m, self.r[0]
+
     def floor_median(self) -> E:
-        return -1 * self.l[0]
+        return int(sum(self.median()) / 2)
 
 
 def run():
-    for line in fileinput.input():
-        print(line)
+    inp = fileinput.input()
+    n = int(next(inp))
+    lr = LR()
+    for i in range(n):
+        lr.add(int(next(inp)))
+        print(lr.floor_median())
 
 
 if __name__ == "__main__":
     run()
 
 
-def median_0(xs: List[int]) -> int:
+def median_0(xs: List[int]) -> Tuple[int, int]:
     n = len(xs)
     if n % 2 == 0:
-        return xs[int(n / 2) - 1]
+        return xs[int(n / 2) - 1], xs[int(n / 2)]
     else:
-        return xs[int(n / 2)]
+        return xs[int(n / 2)], xs[int(n / 2)]
 
 
 def test():
     xs = [5, 3, 2, 4]
-    assert median_0([1]) == 1
-    assert median_0([1, 2]) == 1
-    assert median_0([1, 2, 3]) == 2
+    assert median_0([1]) == (1, 1)
+    assert median_0([1, 2]) == (1, 2)
+    assert median_0([1, 2, 3]) == (2, 2)
 
     lr = LR()
     for i, x in enumerate(xs):
         lr.add(x)
         sl = xs[:i + 1]
-        print(lr)
-        assert lr.floor_median() == median_0(sorted(sl))
+        # print(lr)
+        assert lr.median() == median_0(sorted(sl))
+        m = median_0(sorted(sl))
+        assert lr.floor_median() == int(sum(m) / 2)
+
+
+#
