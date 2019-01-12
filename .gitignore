@@ -2,6 +2,7 @@ python-cookbook
 generators/generators
 generators/coroutines
 trampoline
+django
 *.pdf
 *.py[cod]
 
