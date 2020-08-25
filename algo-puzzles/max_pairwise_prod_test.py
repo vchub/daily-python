@@ -40,6 +40,7 @@ def get_edges(xs: list) -> tuple:
     """find 2 largest and 2 smallest elements of xs"""
     a1, a = sorted(xs[:2])
     b, b1 = a1, a
+    # breakpoint()
 
     assert a >= a1
     assert b1 >= b
